@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
 Name : Orphan Cleaner
-Version : 0.1
+Version : 1.0
 Usage : Cleaning of unnecessary orphan thumbnails from ~/.local/share/icons folder
 
 Modules Used : 
@@ -31,8 +31,9 @@ def run(cmd):
 
 def md5hash(string):
 	# Converts input string to md5hash
-	m = hashlib.md5()
-	m.update(string.encode('utf-8'))
+	string = string.replace('%', '%25')
+	string = string.replace(' ', '%20')
+	m = hashlib.md5(string.encode('utf-8'))
 	return m.hexdigest()
 
 # Get the path of user home
@@ -47,24 +48,24 @@ thumbs.pop()
 total = len(thumbs)
 
 # Find all images files under home directory.
-images = run('find '+home+' -name *.jpg')
-images = images.split('\n')
-images.pop()
-
-gif = run('find '+home+' -name *.gif')
-gifs = gif.split('\n')
-gifs.pop()
-for each in gifs:
-	images.append(each)
-
-png = run('find '+home+' -name *.png')
+images = []
+png = run('find '+home+' -iname *.png')
 pngs = png.split('\n')
 pngs.pop()
 for each in pngs:
-	if each.startswith('/home/pi/.') is False:# This excludes hidden directories
+	if each.startswith(home+'/.') is False:# This excludes hidden directories in home
 		images.append(each)
 
-# This removes nonorphan thumbnail names from thumbs list.
+for format in ('jpg', 'jpeg', 'gif'):
+	pic = run('find '+home+' -iname *.'+format)
+	pics = pic.split('\n')
+	pics.pop()
+	for each in pics:
+		images.append(each)
+
+
+
+# This removes non-orphan thumbnail names from thumbs list.
 for each in images:
 	path = 'file://'+each
 	pathmd5 = md5hash(path)
@@ -83,4 +84,4 @@ confirm = input('Press Enter to continue or any_letter+enter to cancel: ')
 if confirm == '':
 	for each in thumbs:
 		run('rm -f '+home+'/.thumbnails/normal/'+each)
-#		print(each)
+		print(each)
