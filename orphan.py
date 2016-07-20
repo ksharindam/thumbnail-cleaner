@@ -27,7 +27,7 @@ def run(cmd):
 	This function takes a string as input and after exexuting it, returns the output text of the command.
 	'''
 	cmd = shlex.split(cmd)
-	return subprocess.check_output(cmd).decode('ascii')
+	return subprocess.check_output(cmd).decode('utf-8')
 
 def md5hash(string):
 	# Converts input string to md5hash
