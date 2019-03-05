@@ -1,19 +1,16 @@
-# thumbnail-cleaner
-Version : 1.0
+# Thumbnail Cleaner
+Cleans unnecessary orphan thumbnails that is no longer used.  
 
-Platform : Unix and GNU/Linux
-### Descriptions
-Run this program by running in terminal...
+Version : 2.0  
+Platform : GNU/Linux  
 
- python3 orphan.py
+ This program keeps necessary thumbnails of jpg, png, gif, mp4, mkv files.  
+ It deletes thumbnails inside ~/.thumbnails/normal folder.  
 
+### Install
+Run this program by running in terminal...  
 
- This program remove unnecessary orphan thumbnails that is no longer used.
+ `./orphan.py`  
 
- Thus maintains thumbnails and saves storage space.
-
-
- This program keeps necessary thumbnails of jpg, png and gif files.
-
-
- It deletes thumbnails of $HOME/.thumbnails/normal folder.
+To install run...  
+`sudo install orphan.py /usr/local/bin`  
